@@ -18,8 +18,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('api_secret');
-            $table->ipAddress('ip')->nullable();
             $table->enum('user_type',['api','web'])->default('api');
+            $table->string('role', 150);
             $table->rememberToken();
             $table->timestamps();
         });
