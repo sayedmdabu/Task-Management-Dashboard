@@ -39,7 +39,7 @@ Route::middleware(['auth:api','auth.api'])->prefix('v1')->group( function () {
     Route::resource('tasks', TaskController::class);
     Route::resource('projects', ProjectController::class);
     Route::resource('users', UserController::class);
-    Route::resource('users', NotificationController::class);
+    Route::resource('notifications', NotificationController::class);
 
 });
 

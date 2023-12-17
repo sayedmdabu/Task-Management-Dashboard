@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 13, 2023 at 03:54 PM
+-- Generation Time: Dec 17, 2023 at 12:56 AM
 -- Server version: 8.0.35-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.14
 
@@ -62,7 +62,26 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (6, '2016_06_01_000004_create_oauth_clients_table', 1),
 (7, '2016_06_01_000005_create_oauth_personal_access_clients_table', 1),
 (8, '2019_08_19_000000_create_failed_jobs_table', 1),
-(9, '2019_12_14_000001_create_personal_access_tokens_table', 1);
+(9, '2019_12_14_000001_create_personal_access_tokens_table', 1),
+(14, '2023_12_15_140734_create_projects_table', 2),
+(15, '2023_12_15_140803_create_tasks_table', 2),
+(16, '2023_12_15_140913_create_task_users_table', 2),
+(17, '2023_12_15_140943_create_notifications_table', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `read` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -87,8 +106,9 @@ CREATE TABLE `oauth_access_tokens` (
 --
 
 INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
-('76053aaeaac5437e2ed784323cd72dec6c7962cbed2de8ce7cac9b6cff446fd93692cebfcdde52cd', 1, '9ad6fdb7-a45e-4df9-bda5-685c15b30be2', 'task-api', '[]', 0, '2023-12-13 15:48:48', '2023-12-13 15:48:48', '2023-12-14 09:48:48'),
-('f5c051913e02fa07494c326c39f5aea42fff9b9e20f900c9888bbdfe3208716514695d1cc40a61cd', 1, '9ad6fdb7-a45e-4df9-bda5-685c15b30be2', 'task-api', '[]', 0, '2023-12-13 15:49:49', '2023-12-13 15:49:49', '2023-12-14 09:49:49');
+('2dd83cc21918cc3bd3b5d009520f8230410d7d123920f9d2c8f706067effbd2212b2e94327737b6e', 1, '9ada8131-e033-4ca3-b62e-d99ceb3735fa', 'task-api', '[]', 0, '2023-12-16 15:37:08', '2023-12-16 15:37:08', '2023-12-17 09:37:08'),
+('3890b5f24fa458f79fa50a1d99ba6b44f6526bc67ac8301b29431dc4ab44735fcd278b55f0c92f36', 1, '9ada8131-e033-4ca3-b62e-d99ceb3735fa', 'task-api', '[]', 0, '2023-12-16 15:36:55', '2023-12-16 15:36:55', '2023-12-17 09:36:55'),
+('d881416a1032949e1d71cd547bb5e965232f5edcabe1a0c800cc4b2a78a120a4e9fb7b5a2e75574e', 3, '9ada8131-e033-4ca3-b62e-d99ceb3735fa', 'task-api', '[]', 0, '2023-12-16 17:30:52', '2023-12-16 17:30:52', '2023-12-17 11:30:52');
 
 -- --------------------------------------------------------
 
@@ -130,8 +150,8 @@ CREATE TABLE `oauth_clients` (
 --
 
 INSERT INTO `oauth_clients` (`id`, `user_id`, `name`, `secret`, `provider`, `redirect`, `personal_access_client`, `password_client`, `revoked`, `created_at`, `updated_at`) VALUES
-('9ad6fdb7-a45e-4df9-bda5-685c15b30be2', NULL, 'TASK MANAGEMENT DASHBOARD Personal Access Client', '5aOs6l973mSjohDaXjvNGZFZP7bR0soWyVJYAS3Z', NULL, 'http://localhost', 1, 0, 0, '2023-12-13 15:35:03', '2023-12-13 15:35:03'),
-('9ad6fdb7-c34a-4a02-867e-c4fd7e508f1e', NULL, 'TASK MANAGEMENT DASHBOARD Password Grant Client', 'O4e2YPBfGSTFLRyRDtHehire5ev5TPOYAZv0G1gE', 'users', 'http://localhost', 0, 1, 0, '2023-12-13 15:35:03', '2023-12-13 15:35:03');
+('9ada8131-e033-4ca3-b62e-d99ceb3735fa', NULL, 'TASK MANAGEMENT DASHBOARD Personal Access Client', '28POXuRCNqUMlZdW8WnAnlkjrUm7YbSZ5kXGdKCh', NULL, 'http://localhost', 1, 0, 0, '2023-12-15 09:30:10', '2023-12-15 09:30:10'),
+('9ada8132-0233-4c87-9cd5-41955ca780b9', NULL, 'TASK MANAGEMENT DASHBOARD Password Grant Client', 'QudAYSvW6gm0dsBBNT5sKWreyhetrqZeOz3pT8ef', 'users', 'http://localhost', 0, 1, 0, '2023-12-15 09:30:10', '2023-12-15 09:30:10');
 
 -- --------------------------------------------------------
 
@@ -151,7 +171,7 @@ CREATE TABLE `oauth_personal_access_clients` (
 --
 
 INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `updated_at`) VALUES
-(1, '9ad6fdb7-a45e-4df9-bda5-685c15b30be2', '2023-12-13 15:35:03', '2023-12-13 15:35:03');
+(1, '9ada8131-e033-4ca3-b62e-d99ceb3735fa', '2023-12-15 09:30:10', '2023-12-15 09:30:10');
 
 -- --------------------------------------------------------
 
@@ -200,6 +220,68 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `projects`
+--
+
+CREATE TABLE `projects` (
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `projects`
+--
+
+INSERT INTO `projects` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Projects Test 1', '2023-12-16 15:53:56', '2023-12-16 15:53:56'),
+(2, 'Projects Test 2', '2023-12-16 15:56:55', '2023-12-16 15:56:55'),
+(3, 'project 3', '2023-12-16 16:09:35', '2023-12-16 16:09:35');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tasks`
+--
+
+CREATE TABLE `tasks` (
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `project_id` bigint UNSIGNED NOT NULL,
+  `user_assigned_id` bigint UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tasks`
+--
+
+INSERT INTO `tasks` (`id`, `name`, `status`, `start_date`, `end_date`, `description`, `project_id`, `user_assigned_id`, `created_at`, `updated_at`) VALUES
+(2, 'Test 1', 'To Do', '2023-12-11', '2023-12-16', 'Your Task Description', 1, 1, '2023-12-16 15:57:04', '2023-12-16 15:57:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `task_users`
+--
+
+CREATE TABLE `task_users` (
+  `id` bigint UNSIGNED NOT NULL,
+  `task_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -210,10 +292,8 @@ CREATE TABLE `users` (
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `api_secret` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `domain` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `ip` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `hit_count` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_type` enum('api','web') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'api',
+  `role` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -223,8 +303,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `api_secret`, `domain`, `ip`, `hit_count`, `user_type`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$pQB1ETX7fPPErXIym78ZVOoUEg.CNPFtznEaJHQSLJQ0kha/wvbM6', 'qwertyudfcvgbhn', NULL, NULL, NULL, 'api', NULL, '2023-12-13 15:48:48', '2023-12-13 15:48:48');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `api_secret`, `user_type`, `role`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$cWVKd9hoKEqJluKPb0boz.ptnuVxUN7rHsIvxNYrRiqv5ajL4IuA.', 'qwertyudfcvgbhn', 'api', NULL, NULL, '2023-12-16 15:36:55', '2023-12-16 15:36:55'),
+(3, 'User', 'user@gmail.com', NULL, '$2y$10$m2SvZEcWFfUSeTrnQZQM9e1WpX0nGn1r9upAaJRbTKN2M153kh.ve', 'qwertyudfcvgbhn', 'api', 'regular user', NULL, '2023-12-16 17:30:52', '2023-12-16 17:30:52');
 
 --
 -- Indexes for dumped tables
@@ -242,6 +323,13 @@ ALTER TABLE `failed_jobs`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `notifications_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `oauth_access_tokens`
@@ -292,6 +380,28 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
+-- Indexes for table `projects`
+--
+ALTER TABLE `projects`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tasks`
+--
+ALTER TABLE `tasks`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tasks_project_id_foreign` (`project_id`),
+  ADD KEY `tasks_user_assigned_id_foreign` (`user_assigned_id`);
+
+--
+-- Indexes for table `task_users`
+--
+ALTER TABLE `task_users`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `task_users_task_id_foreign` (`task_id`),
+  ADD KEY `task_users_user_id_foreign` (`user_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -312,7 +422,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `oauth_personal_access_clients`
@@ -327,10 +443,52 @@ ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `projects`
+--
+ALTER TABLE `projects`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tasks`
+--
+ALTER TABLE `tasks`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `task_users`
+--
+ALTER TABLE `task_users`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD CONSTRAINT `notifications_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `tasks`
+--
+ALTER TABLE `tasks`
+  ADD CONSTRAINT `tasks_project_id_foreign` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tasks_user_assigned_id_foreign` FOREIGN KEY (`user_assigned_id`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `task_users`
+--
+ALTER TABLE `task_users`
+  ADD CONSTRAINT `task_users_task_id_foreign` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `task_users_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
